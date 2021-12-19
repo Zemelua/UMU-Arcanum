@@ -1,5 +1,6 @@
 package io.github.zemelua.umu_arcanum.client.renderer.model.block;
 
+import io.github.zemelua.umu_arcanum.UMUArcanum;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ManaModel implements IDynamicBakedModel {
-	private final BakedModel parent;
+	private final BakedModel parent; // must be super FluidModel
 
 	public ManaModel(BakedModel parent) {
 		this.parent = parent;
@@ -29,15 +30,15 @@ public class ManaModel implements IDynamicBakedModel {
 	public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random random, IModelData extraData) {
 		List<BakedQuad> quads = this.parent.getQuads(state, side, random, extraData);
 
+		UMUArcanum.LOGGER.info("loggg");
+
 		for (int i = 0; i < quads.size(); i++) {
 			BakedQuad quad = quads.get(i);
 			BakedQuadBuilder consumer = new BakedQuadBuilder(quad.getSprite());
 
-			this.putLightVertex(consumer);
+			quad.pipe(consumer); // copy to builder
 
-			consumer.setQuadTint(quad.getTintIndex());
-			consumer.setQuadOrientation(quad.getDirection());
-			consumer.setApplyDiffuseLighting(quad.isShade());
+			this.putLightVertex(consumer);
 
 			quads.set(i, consumer.build());
 		}
@@ -46,7 +47,8 @@ public class ManaModel implements IDynamicBakedModel {
 	}
 
 	private void putLightVertex(IVertexConsumer consumer) {
-		consumer.put(3, 15, 15);
+		// Max light value?
+		consumer.put(3, (15<<4)/32768.0f, (15<<4)/32768.0f);
 	}
 
 	@Override
