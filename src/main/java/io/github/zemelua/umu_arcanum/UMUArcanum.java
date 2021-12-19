@@ -1,11 +1,14 @@
 package io.github.zemelua.umu_arcanum;
 
 import io.github.zemelua.umu_arcanum.block.ModBlocks;
+import io.github.zemelua.umu_arcanum.client.ClientHandler;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -27,6 +30,8 @@ public class UMUArcanum {
 		ModBlocks.initialize(forgeEvents, modEvents);
 		ModItems.initialize(forgeEvents, modEvents);
 		ModFluids.initialize(forgeEvents, modEvents);
+
+		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> new ClientHandler(forgeEvents, modEvents)::initialize);
 	}
 
 	public static ResourceLocation location(String path) {

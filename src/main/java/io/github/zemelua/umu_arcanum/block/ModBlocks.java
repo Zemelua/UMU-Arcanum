@@ -22,13 +22,11 @@ public final class ModBlocks {
 
 	static {
 		MANA = REGISTRY.register("mana", ()
-						-> new LiquidBlock(ModFluids.MANA, BlockBehaviour.Properties.of(Material.WATER)
-						.noCollission()
-						.randomTicks()
-						.strength(100.0F)
-						.noDrops()
-						.lightLevel((state) -> 15)
-				)
+				-> new LiquidBlock(ModFluids.MANA, BlockBehaviour.Properties.of(Material.WATER)
+				.noCollission()
+				.randomTicks()
+				.strength(100.0F)
+				.noDrops())
 		);
 	}
 }

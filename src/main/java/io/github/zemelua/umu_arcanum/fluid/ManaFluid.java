@@ -3,13 +3,10 @@ package io.github.zemelua.umu_arcanum.fluid;
 import io.github.zemelua.umu_arcanum.UMUArcanum;
 import io.github.zemelua.umu_arcanum.block.ModBlocks;
 import io.github.zemelua.umu_arcanum.item.ModItems;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public final class ManaFluid {
 	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(
@@ -22,9 +19,4 @@ public final class ManaFluid {
 			.bucket(ModItems.MANA_BUCKET);
 
 	private ManaFluid() {}
-
-	public static void onFMLClientSetup(final FMLClientSetupEvent event) {
-		ItemBlockRenderTypes.setRenderLayer(ModFluids.MANA.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_MANA.get(), RenderType.translucent());
-	}
 }
