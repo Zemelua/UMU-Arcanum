@@ -1,4 +1,4 @@
-package io.github.zemelua.umu_arcanum.client.renderer.model.block;
+package io.github.zemelua.umu_arcanum.client.model.block;
 
 import io.github.zemelua.umu_arcanum.UMUArcanum;
 import net.minecraft.client.renderer.block.model.BakedQuad;

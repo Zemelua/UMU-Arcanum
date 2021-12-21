@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_arcanum;
 
 import io.github.zemelua.umu_arcanum.block.ModBlocks;
+import io.github.zemelua.umu_arcanum.block.entity.ModBlockEntities;
 import io.github.zemelua.umu_arcanum.client.ClientHandler;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;
@@ -29,6 +30,7 @@ public class UMUArcanum {
 
 		ModBlocks.initialize(forgeEvents, modEvents);
 		ModItems.initialize(forgeEvents, modEvents);
+		ModBlockEntities.initialize(forgeEvents, modEvents);
 		ModFluids.initialize(forgeEvents, modEvents);
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> new ClientHandler(forgeEvents, modEvents)::initialize);
