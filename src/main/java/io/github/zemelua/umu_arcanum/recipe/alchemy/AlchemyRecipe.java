@@ -1,5 +1,6 @@
 package io.github.zemelua.umu_arcanum.recipe.alchemy;
 
+import io.github.zemelua.umu_arcanum.util.StrictlyIngredient;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -67,7 +68,7 @@ public class AlchemyRecipe implements IAlchemyRecipe {
 		}
 
 		public Builder addIngredient(ItemStack itemStack) {
-			this.ingredients.add(Ingredient.of(itemStack));
+			this.ingredients.add(StrictlyIngredient.of(itemStack));
 
 			return this;
 		}

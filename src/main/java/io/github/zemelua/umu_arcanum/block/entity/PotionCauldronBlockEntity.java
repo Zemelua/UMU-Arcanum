@@ -5,9 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.Containers;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -26,7 +25,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PotionCauldronBlockEntity extends BlockEntity {
+public class PotionCauldronBlockEntity extends BlockEntity implements Clearable {
 	private final List<EffectMixture> mixtures = new ArrayList<>();
 
 	private Potion root = Potions.EMPTY;
@@ -76,52 +75,38 @@ public class PotionCauldronBlockEntity extends BlockEntity {
 		return effectInstances;
 	}
 
-	public void stir(ItemStack... ingredients) {
-		if (this.level == null) return;
-
-		ItemStack result = AlchemyRecipes.tryMatch(this.root, this.getEffectInstances(), Arrays.asList(ingredients));
-		Containers.dropItemStack(
-				this.level, this.worldPosition.getX(), this.worldPosition.getY() + 0.8D, this.worldPosition.getZ(), result
-		);
-
-		this.onDataChanged();
+	public ItemStack stir(ItemStack... ingredients) {
+		return AlchemyRecipes.tryMatch(this.root, this.getEffectInstances(), Arrays.asList(ingredients));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
-
+	public void saveAdditional(CompoundTag tag) {
 		ListTag mixtureTags = new ListTag();
 		for (EffectMixture mixture : this.mixtures) {
 			mixtureTags.add(mixture.save());
 		}
+
 		tag.put("Mixtures", mixtureTags);
 		tag.putString("Root", Registry.POTION.getKey(this.root).toString());
-
-		return tag;
 	}
 
 	@Override
 	public void load(CompoundTag tag) {
 		super.load(tag);
 
-		this.mixtures.clear();
-		ListTag mixtures = tag.getList("Mixtures", 10);
-		for (int i = 0; i < mixtures.size(); i++) {
-			this.mixtures.add(EffectMixture.load(this, mixtures.getCompound(i)));
+		this.clearContent();
+
+		ListTag mixtureTags = tag.getList("Mixtures", 10);
+		for (int i = 0; i < mixtureTags.size(); i++) {
+			this.mixtures.add(EffectMixture.load(this, mixtureTags.getCompound(i)));
 		}
 		this.root = Potion.byName(tag.getString("Root"));
 	}
 
 	@Override
 	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
-	}
-
-	@Override
-	public void handleUpdateTag(CompoundTag tag) {
-		this.load(tag);
+		return this.saveWithoutMetadata();
 	}
 
 	@Nullable
@@ -130,20 +115,11 @@ public class PotionCauldronBlockEntity extends BlockEntity {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	@Override
-	public void onDataPacket(Connection network, ClientboundBlockEntityDataPacket packet) {
-		CompoundTag tag = packet.getTag();
-
-		if (tag != null) {
-			this.handleUpdateTag(tag);
-		}
-	}
-
 	private void onDataChanged() {
 		this.setChanged();
-		if (this.getLevel() == null) return;
-
-		this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+		if (this.getLevel() != null) {
+			this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+		}
 	}
 
 	public Potion getRoot() {
@@ -159,6 +135,12 @@ public class PotionCauldronBlockEntity extends BlockEntity {
 
 	public int getColor() {
 		return PotionUtils.getColor(this.getEffectInstances());
+	}
+
+	@Override
+	public void clearContent() {
+		this.mixtures.clear();
+		this.root = Potions.EMPTY;
 	}
 
 	public class EffectMixture {
