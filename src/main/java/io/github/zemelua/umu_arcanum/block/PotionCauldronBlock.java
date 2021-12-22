@@ -46,8 +46,7 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity blockEntity
-				&& state.getValue(BlockStateProperties.LEVEL_CAULDRON) == 3) {
+		if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity blockEntity) {
 			ItemStack heldStack = player.getItemInHand(hand);
 
 			if (heldStack.getItem() instanceof ShovelItem) {

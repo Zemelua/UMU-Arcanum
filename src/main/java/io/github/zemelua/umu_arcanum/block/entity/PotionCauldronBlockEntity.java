@@ -1,12 +1,13 @@
 package io.github.zemelua.umu_arcanum.block.entity;
 
-import io.github.zemelua.umu_arcanum.UMUArcanum;
+import io.github.zemelua.umu_arcanum.recipe.alchemy.AlchemyRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,9 +77,14 @@ public class PotionCauldronBlockEntity extends BlockEntity {
 	}
 
 	public void stir(ItemStack... ingredients) {
-		for (ItemStack ingredient : ingredients) {
-			UMUArcanum.LOGGER.info(ingredient);
-		}
+		if (this.level == null) return;
+
+		ItemStack result = AlchemyRecipes.tryMatch(this.root, this.getEffectInstances(), Arrays.asList(ingredients));
+		Containers.dropItemStack(
+				this.level, this.worldPosition.getX(), this.worldPosition.getY() + 0.8D, this.worldPosition.getZ(), result
+		);
+
+		this.onDataChanged();
 	}
 
 	@Override
@@ -143,14 +150,18 @@ public class PotionCauldronBlockEntity extends BlockEntity {
 		return this.root;
 	}
 
-	public int getColor() {
-		return PotionUtils.getColor(PotionUtils.getAllEffects(this.root, this.mixtures.stream()
+	private Collection<MobEffectInstance> getEffectInstances() {
+		return PotionUtils.getAllEffects(this.root, this.mixtures.stream()
 				.map(EffectMixture::toInstance)
 				.collect(Collectors.toList())
-		));
+		);
 	}
 
-	private class EffectMixture {
+	public int getColor() {
+		return PotionUtils.getColor(this.getEffectInstances());
+	}
+
+	public class EffectMixture {
 		private final MobEffect effect;
 		private double duration;
 		private double amplifier;
