@@ -12,7 +12,7 @@ public final class ManaFluid {
 	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(
 			ModFluids.MANA,
 			ModFluids.FLOWING_MANA,
-			FluidAttributes.builder(UMUArcanum.location("block/mana_still"), UMUArcanum.location("block/mana_flow"))
+			FluidAttributes.builder(UMUArcanum.resource("block/mana_still"), UMUArcanum.resource("block/mana_flow"))
 					.sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 					.luminosity(15))
 			.block(() -> (LiquidBlock) ModBlocks.MANA.get())

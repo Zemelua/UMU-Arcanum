@@ -16,9 +16,11 @@ public final class ModItems {
 
 	public static final RegistryObject<Item> MANA_BOTTLE;
 	public static final RegistryObject<Item> MANA_BUCKET;
+	public static final RegistryObject<Item> WITCH_HAT;
 
 	public static void initialize(IEventBus forgeEvents, IEventBus modEvents) {
 		ModItems.REGISTRY.register(modEvents);
+		forgeEvents.addListener(WitchHatItem::onLivingHurt);
 	}
 
 	static {
@@ -32,6 +34,10 @@ public final class ModItems {
 				-> new BucketItem(ModFluids.MANA, new Item.Properties()
 				.craftRemainder(Items.BUCKET)
 				.stacksTo(1)
+				.tab(ModTabs.UMU_ARCANUM))
+		);
+		WITCH_HAT = REGISTRY.register("witch_hat", ()
+				-> new WitchHatItem(new Item.Properties()
 				.tab(ModTabs.UMU_ARCANUM))
 		);
 	}

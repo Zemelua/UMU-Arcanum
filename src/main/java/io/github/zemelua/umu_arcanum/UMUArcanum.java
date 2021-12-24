@@ -36,7 +36,7 @@ public class UMUArcanum {
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> new ClientHandler(forgeEvents, modEvents)::initialize);
 	}
 
-	public static ResourceLocation location(String path) {
+	public static ResourceLocation resource(String path) {
 		return new ResourceLocation(UMUArcanum.MOD_ID, path);
 	}
 

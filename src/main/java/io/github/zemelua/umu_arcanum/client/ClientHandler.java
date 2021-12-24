@@ -2,6 +2,7 @@ package io.github.zemelua.umu_arcanum.client;
 
 import io.github.zemelua.umu_arcanum.block.ModBlocks;
 import io.github.zemelua.umu_arcanum.block.entity.ModBlockEntities;
+import io.github.zemelua.umu_arcanum.client.model.ModModelLayers;
 import io.github.zemelua.umu_arcanum.client.model.block.ManaModel;
 import io.github.zemelua.umu_arcanum.client.renderer.blockentity.PotionCauldronRenderer;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
@@ -28,6 +29,7 @@ public class ClientHandler {
 	public void initialize() {
 		this.modEvents.addListener(ClientHandler::onFMLClientSetup);
 		this.modEvents.addListener(ClientHandler::onModelBake);
+		this.modEvents.addListener(ModModelLayers::onRegisterLayerDefinitions);
 	}
 
 	private static void onFMLClientSetup(final FMLClientSetupEvent event) {
