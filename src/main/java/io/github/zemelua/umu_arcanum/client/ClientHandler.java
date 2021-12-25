@@ -3,7 +3,7 @@ package io.github.zemelua.umu_arcanum.client;
 import io.github.zemelua.umu_arcanum.block.ModBlocks;
 import io.github.zemelua.umu_arcanum.block.entity.ModBlockEntities;
 import io.github.zemelua.umu_arcanum.client.model.ModModelLayers;
-import io.github.zemelua.umu_arcanum.client.model.block.ManaModel;
+import io.github.zemelua.umu_arcanum.client.model.block.ManaCauldronModel;
 import io.github.zemelua.umu_arcanum.client.renderer.blockentity.PotionCauldronRenderer;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -43,11 +43,11 @@ public class ClientHandler {
 	}
 
 	private static void onModelBake(final ModelBakeEvent event) {
-		for (BlockState state : ModBlocks.MANA.get().getStateDefinition().getPossibleStates()) {
+		for (BlockState state : ModBlocks.MANA_CAULDRON.get().getStateDefinition().getPossibleStates()) {
 			ModelResourceLocation location = BlockModelShaper.stateToModelLocation(state);
 			BakedModel parent = event.getModelManager().getModel(location);
 
-			event.getModelRegistry().put(location, new ManaModel(parent));
+			event.getModelRegistry().put(location, new ManaCauldronModel(parent));
 		}
 	}
 }
