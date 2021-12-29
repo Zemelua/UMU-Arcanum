@@ -76,7 +76,11 @@ public class PotionCauldronBlockEntity extends BlockEntity implements Clearable 
 	}
 
 	public ItemStack stir(ItemStack... ingredients) {
-		return AlchemyRecipes.tryMatch(this.root, this.getEffectInstances(), Arrays.asList(ingredients));
+		return AlchemyRecipes.tryMatch(this.root, this.getEffectInstances(), Arrays.asList(ingredients), this);
+	}
+
+	public void consume() {
+		this.mixtures.forEach(EffectMixture::scoop);
 	}
 
 	@Override

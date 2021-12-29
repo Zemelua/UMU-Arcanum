@@ -1,5 +1,6 @@
 package io.github.zemelua.umu_arcanum.recipe.alchemy;
 
+import io.github.zemelua.umu_arcanum.block.entity.PotionCauldronBlockEntity;
 import io.github.zemelua.umu_arcanum.util.StrictlyIngredient;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -35,7 +36,7 @@ public class AlchemyRecipe implements IAlchemyRecipe {
 	}
 
 	@Override
-	public ItemStack getResult() {
+	public ItemStack getResult(Potion root, Collection<MobEffectInstance> solution, Collection<ItemStack> ingredients, PotionCauldronBlockEntity blockEntity) {
 		return this.result.copy();
 	}
 

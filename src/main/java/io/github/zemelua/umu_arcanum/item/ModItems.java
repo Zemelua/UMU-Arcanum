@@ -1,9 +1,7 @@
 package io.github.zemelua.umu_arcanum.item;
 
 import io.github.zemelua.umu_arcanum.UMUArcanum;
-import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.tab.ModTabs;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -21,6 +19,7 @@ public final class ModItems {
 	public static void initialize(IEventBus forgeEvents, IEventBus modEvents) {
 		ModItems.REGISTRY.register(modEvents);
 		forgeEvents.addListener(WitchHatItem::onLivingHurt);
+		forgeEvents.addListener(ManaBucketItem::onPotionAdded);
 	}
 
 	static {
@@ -31,7 +30,7 @@ public final class ModItems {
 				.tab(ModTabs.UMU_ARCANUM))
 		);
 		MANA_BUCKET = REGISTRY.register("mana_bucket", ()
-				-> new BucketItem(ModFluids.MANA, new Item.Properties()
+				-> new ManaBucketItem(new Item.Properties()
 				.craftRemainder(Items.BUCKET)
 				.stacksTo(1)
 				.tab(ModTabs.UMU_ARCANUM))

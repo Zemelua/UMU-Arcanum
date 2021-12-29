@@ -29,60 +29,6 @@ public class ManaCauldronBlock extends LayeredCauldronBlock {
 		super(properties, precipitation -> precipitation == Biome.Precipitation.NONE, ManaCauldronBlock.INTERACTIONS);
 	}
 
-	static {
-		FILL_MANA = ((state, level, pos, player, hand, itemStack)
-				-> CauldronInteraction.emptyBucket(level, pos, player, hand, itemStack,
-				ModBlocks.MANA_CAULDRON.get().defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3),
-				SoundEvents.BUCKET_EMPTY)
-		);
-		PICK_MANA = ((state, level, pos, player, hand, itemStack)
-				-> CauldronInteraction.fillBucket(state, level, pos, player, hand, itemStack,
-				new ItemStack(ModItems.MANA_BUCKET.get()), (stateArg)
-						-> stateArg.getValue(LayeredCauldronBlock.LEVEL) == 3,
-				SoundEvents.BUCKET_FILL)
-		);
-		POUR_MANA = ((state, level, pos, player, hand, itemStack) -> {
-			if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
-				if (!level.isClientSide()) {
-					player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(Items.GLASS_BOTTLE)));
-					player.awardStat(Stats.USE_CAULDRON);
-					player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
-					level.setBlockAndUpdate(pos, state.cycle(LayeredCauldronBlock.LEVEL));
-					level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-					level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-				}
-
-				return InteractionResult.sidedSuccess(level.isClientSide());
-			} else {
-				return InteractionResult.PASS;
-			}
-		});
-		SCOOP_MANA = ((state, level, pos, player, hand, itemStack) -> {
-			if (!level.isClientSide()) {
-				player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(ModItems.MANA_BOTTLE.get())));
-				player.awardStat(Stats.USE_CAULDRON);
-				player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
-				LayeredCauldronBlock.lowerFillLevel(state, level, pos);
-				level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-				level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
-			}
-
-			return InteractionResult.sidedSuccess(level.isClientSide());
-		});
-		POUR_MANA_EMPTY = ((state, level, pos, player, hand, itemStack) -> {
-			if (!level.isClientSide()) {
-				player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(Items.GLASS_BOTTLE)));
-				player.awardStat(Stats.USE_CAULDRON);
-				player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
-				level.setBlockAndUpdate(pos, ModBlocks.MANA_CAULDRON.get().defaultBlockState());
-				level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-				level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-			}
-
-			return InteractionResult.sidedSuccess(level.isClientSide());
-		});
-	}
-
 	protected static void onFMLCommonSetup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			CauldronInteraction.addDefaultInteractions(INTERACTIONS);
@@ -97,5 +43,59 @@ public class ManaCauldronBlock extends LayeredCauldronBlock {
 			CauldronInteraction.POWDER_SNOW.put(ModItems.MANA_BUCKET.get(), ManaCauldronBlock.FILL_MANA);
 			CauldronInteraction.EMPTY.put(ModItems.MANA_BOTTLE.get(), ManaCauldronBlock.POUR_MANA_EMPTY);
 		});
+	}
+
+	static {
+		FILL_MANA = (state, level, pos, player, hand, itemStack)
+				-> CauldronInteraction.emptyBucket(level, pos, player, hand, itemStack,
+				ModBlocks.MANA_CAULDRON.get().defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3),
+				SoundEvents.BUCKET_EMPTY)
+		;
+		PICK_MANA = (state, level, pos, player, hand, itemStack)
+				-> CauldronInteraction.fillBucket(state, level, pos, player, hand, itemStack,
+				new ItemStack(ModItems.MANA_BUCKET.get()), (stateArg)
+						-> stateArg.getValue(LayeredCauldronBlock.LEVEL) == 3,
+				SoundEvents.BUCKET_FILL)
+		;
+		POUR_MANA = (state, level, pos, player, hand, itemStack) -> {
+			if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
+				if (!level.isClientSide()) {
+					player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(Items.GLASS_BOTTLE)));
+					player.awardStat(Stats.USE_CAULDRON);
+					player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
+					level.setBlockAndUpdate(pos, state.cycle(LayeredCauldronBlock.LEVEL));
+					level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+					level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+				}
+
+				return InteractionResult.sidedSuccess(level.isClientSide());
+			} else {
+				return InteractionResult.PASS;
+			}
+		};
+		SCOOP_MANA = (state, level, pos, player, hand, itemStack) -> {
+			if (!level.isClientSide()) {
+				player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(ModItems.MANA_BOTTLE.get())));
+				player.awardStat(Stats.USE_CAULDRON);
+				player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
+				LayeredCauldronBlock.lowerFillLevel(state, level, pos);
+				level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+				level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
+			}
+
+			return InteractionResult.sidedSuccess(level.isClientSide());
+		};
+		POUR_MANA_EMPTY = (state, level, pos, player, hand, itemStack) -> {
+			if (!level.isClientSide()) {
+				player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(Items.GLASS_BOTTLE)));
+				player.awardStat(Stats.USE_CAULDRON);
+				player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
+				level.setBlockAndUpdate(pos, ModBlocks.MANA_CAULDRON.get().defaultBlockState());
+				level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+				level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+			}
+
+			return InteractionResult.sidedSuccess(level.isClientSide());
+		};
 	}
 }
