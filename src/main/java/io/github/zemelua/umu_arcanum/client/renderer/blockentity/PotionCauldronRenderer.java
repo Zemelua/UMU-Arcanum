@@ -42,7 +42,7 @@ public class PotionCauldronRenderer implements BlockEntityRenderer<PotionCauldro
 				.endVertex();
 		consumer.vertex(matrix, 2F / 16F, (float) height, 14F / 16F)
 				.color(red, green, blue, 255)
-				.uv(texture.getU(14F), texture.getV(2F))
+				.uv(texture.getU(2F), texture.getV(14F))
 				.uv2(overlay)
 				.normal(0.0F, 1.0F, 0.0F)
 				.endVertex();
@@ -54,7 +54,7 @@ public class PotionCauldronRenderer implements BlockEntityRenderer<PotionCauldro
 				.endVertex();
 		consumer.vertex(matrix, 14F / 16F, (float) height, 2F / 16F)
 				.color(red, green, blue, 255)
-				.uv(texture.getU(2F), texture.getV(14F))
+				.uv(texture.getU(14F), texture.getV(2F))
 				.uv2(light)
 				.normal(0.0F, 1.0F, 0.0F)
 				.endVertex();
