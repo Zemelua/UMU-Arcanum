@@ -4,9 +4,7 @@
 	"package": "io.github.zemelua.umu_arcanum.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "umu_arcanum.refmap.json",
-	"mixins": [
-		"LightningBoltMixin"
-	],
+	"mixins": [ "BottleItemMixin", "LightningBoltMixin" ],
 	"client": [
 		"LiquidBlockRendererMixin"
 	],
