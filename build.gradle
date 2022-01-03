@@ -57,7 +57,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                umuarcanum {
+                umu_arcanum {
                     source sourceSets.main
                 }
             }
@@ -79,7 +79,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                umuarcanum {
+                umu_arcanum {
                     source sourceSets.main
                 }
             }
@@ -101,10 +101,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'umuarcanum', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'umu_arcanum', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                umuarcanum {
+                umu_arcanum {
                     source sourceSets.main
                 }
             }
@@ -150,13 +150,19 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    afterEvaluate {
+        minecraft('cpw.mods:modlauncher:9.0.7') {
+            force = true
+        }
+    }
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "umuarcanum",
+                "Specification-Title"     : "umu_arcanum",
                 "Specification-Vendor"    : "Zemelua",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
