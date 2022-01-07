@@ -26,6 +26,7 @@ public class PotionCauldronRenderer implements BlockEntityRenderer<PotionCauldro
 		double height = ((LayeredCauldronBlock) ModBlocks.POTION_CAULDRON.get()).getContentHeight(blockEntity.getBlockState());
 		Function<ResourceLocation, TextureAtlasSprite> atlas = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
 		TextureAtlasSprite texture = atlas.apply(PotionCauldronRenderer.WATER_LOCATION);
+
 		int color = blockEntity.getColor();
 
 		int red = FastColor.ARGB32.red(color);

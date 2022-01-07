@@ -10,6 +10,7 @@ import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifierProvide
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifiers;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;
+import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -40,6 +41,7 @@ public class UMUArcanum {
 		ModItems.initialize(forgeEvents, modEvents);
 		ModBlockEntities.initialize(forgeEvents, modEvents);
 		ModFluids.initialize(forgeEvents, modEvents);
+		ModRecipeSerializers.initialize(forgeEvents, modEvents);
 		ModLootModifiers.initialize(forgeEvents, modEvents);
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> new ClientHandler(forgeEvents, modEvents)::initialize);

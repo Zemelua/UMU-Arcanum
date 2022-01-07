@@ -14,9 +14,13 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -35,6 +39,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityBlock {
 	private static final Map<Item, CauldronInteraction> INTERACTIONS = CauldronInteraction.newInteractionMap();
@@ -53,24 +58,24 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 			ItemStack heldStack = player.getItemInHand(hand);
 			Collection<ItemEntity> itemEntities = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos));
 
-			if (heldStack.getItem() instanceof ShovelItem && !itemEntities.isEmpty()) {
+			if (heldStack.is(Items.STICK) && !itemEntities.isEmpty()) {
 				if (!level.isClientSide()) {
 					level.playSound(player, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-					ItemStack result = blockEntity.stir(itemEntities.stream()
+					Optional<ItemStack> result = blockEntity.stir(itemEntities.stream()
 							.map(ItemEntity::getItem)
 							.toArray(ItemStack[]::new)
 					);
 
-					if (result != ItemStack.EMPTY) {
+					result.ifPresentOrElse(arg -> {
 						level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
 						ExperienceOrb.award((ServerLevel) level, Vec3.atCenterOf(pos), 22);
-						Containers.dropItemStack(level, pos.getX(), pos.getY() + 0.8D, pos.getZ(), result);
+						Containers.dropItemStack(level, pos.getX(), pos.getY() + 0.8D, pos.getZ(), arg);
 						itemEntities.forEach(ItemEntity::discard);
-					} else {
+					}, () -> {
 						level.explode(null, pos.getX(), pos.getY(), pos.getZ(), 4.0F, Explosion.BlockInteraction.NONE);
 						level.setBlock(pos, Blocks.CAULDRON.defaultBlockState(), 4);
-					}
+					});
 				}
 
 				return InteractionResult.sidedSuccess(level.isClientSide());
@@ -97,7 +102,7 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 			if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
 				if (!level.isClientSide()) {
 					if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity blockEntityPotionCauldron) {
-						blockEntityPotionCauldron.pour(itemStack);
+						blockEntityPotionCauldron.pourEffect(PotionUtils.getMobEffects(itemStack));
 					}
 					player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(Items.GLASS_BOTTLE)));
 					player.awardStat(Stats.USE_CAULDRON);
@@ -135,9 +140,9 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 			if (!level.isClientSide()) {
 				ItemStack potionStack = new ItemStack(Items.POTION);
 				if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity blockEntityPotionCauldron) {
-					Potion potion = blockEntityPotionCauldron.getRoot();
+					Potion potion = Potions.EMPTY;
 					PotionUtils.setPotion(potionStack, potion);
-					PotionUtils.setCustomEffects(potionStack, blockEntityPotionCauldron.scoop());
+					PotionUtils.setCustomEffects(potionStack, blockEntityPotionCauldron.scoopEffect());
 				}
 				player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, potionStack));
 				player.awardStat(Stats.USE_CAULDRON);
@@ -158,7 +163,7 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 				player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
 				level.setBlockAndUpdate(pos, ModBlocks.POTION_CAULDRON.get().defaultBlockState());
 				if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity blockEntityPotionCauldron) {
-					blockEntityPotionCauldron.pour(itemStack);
+					blockEntityPotionCauldron.pourEffect(PotionUtils.getMobEffects(itemStack));
 				}
 				level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
 				level.gameEvent(null, GameEvent.FLUID_PLACE, pos);

@@ -1,81 +1,115 @@
 package io.github.zemelua.umu_arcanum.recipe.alchemy;
 
-import io.github.zemelua.umu_arcanum.block.entity.PotionCauldronBlockEntity;
-import io.github.zemelua.umu_arcanum.util.StrictlyIngredient;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
+import com.google.gson.JsonObject;
+import io.github.zemelua.umu_arcanum.inventory.AlchemyContainer;
+import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
+import io.github.zemelua.umu_arcanum.recipe.ModRecipeTypes;
+import io.github.zemelua.umu_arcanum.util.RecipeUtils;
+import io.github.zemelua.umu_arcanum.util.Soup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.RecipeMatcher;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
 
-@SuppressWarnings("ClassCanBeRecord")
-public class AlchemyRecipe implements IAlchemyRecipe {
-	private final Predicate<Potion> root;
-	private final Predicate<Collection<MobEffectInstance>> solution;
+public class AlchemyRecipe implements Recipe<AlchemyContainer> {
+	private final ResourceLocation id;
 	private final List<Ingredient> ingredients;
+	private final List<Soup> soups;
 	private final ItemStack result;
 
-	public AlchemyRecipe(Predicate<Potion> root, Predicate<Collection<MobEffectInstance>> solution,
-						 List<Ingredient> ingredients, ItemStack result) {
-		this.root = root;
-		this.solution = solution;
-		this.ingredients = ingredients;
+	public AlchemyRecipe(ResourceLocation id, Collection<Ingredient> ingredients, Collection<Soup> soups, ItemStack result) {
+		this.id = id;
+		this.ingredients = List.copyOf(ingredients);
+		this.soups = List.copyOf(soups);
 		this.result = result;
 	}
 
 	@Override
-	public boolean matches(Potion root, Collection<MobEffectInstance> solution, Collection<ItemStack> ingredients) {
-		return this.root.test(root) && this.solution.test(solution)
-				&& RecipeMatcher.findMatches(List.copyOf(ingredients), this.ingredients) != null;
+	public NonNullList<Ingredient> getIngredients() {
+		NonNullList<Ingredient> nonNullList = NonNullList.create();
+
+		for (int i = 0; i < this.ingredients.size(); i++) {
+			nonNullList.add(i, this.ingredients.get(i));
+		}
+
+		return nonNullList;
+	}
+
+	public List<Soup> getSoups() {
+		return this.soups;
 	}
 
 	@Override
-	public ItemStack getResult(Potion root, Collection<MobEffectInstance> solution, Collection<ItemStack> ingredients, PotionCauldronBlockEntity blockEntity) {
+	public boolean matches(AlchemyContainer container, Level level) {
+		return RecipeMatcher.findMatches(container.getItemStacks(), this.ingredients) != null
+				&& RecipeMatcher.findMatches(container.getEffectInstances(), this.soups) != null;
+	}
+
+	@Override
+	public ItemStack assemble(AlchemyContainer container) {
 		return this.result.copy();
 	}
 
-	public static class Builder {
-		private Predicate<Potion> root = root -> true;
-		private Predicate<Collection<MobEffectInstance>> solution = solution -> true;
-		private final List<Ingredient> ingredients = new ArrayList<>();
+	@Override
+	public boolean canCraftInDimensions(int width, int height) {
+		return true;
+	}
 
-		public Builder setRoot(Potion root) {
-			this.root = rootArg -> rootArg == root;
+	@Override
+	public ItemStack getResultItem() {
+		return this.result;
+	}
 
-			return this;
+	@Override
+	public ResourceLocation getId() {
+		return this.id;
+	}
+
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return ModRecipeSerializers.ALCHEMY.get();
+	}
+
+	@Override
+	public RecipeType<?> getType() {
+		return ModRecipeTypes.ALCHEMY;
+	}
+
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlchemyRecipe> {
+		@Override
+		public AlchemyRecipe fromJson(ResourceLocation id, JsonObject jsonObject) {
+			List<Ingredient> ingredients = RecipeUtils.ingredientsFromJson(jsonObject.getAsJsonArray("ingredients"));
+			List<Soup> soups = RecipeUtils.soupsFromJson(jsonObject.getAsJsonArray("soups"));
+			ItemStack result = ShapedRecipe.itemStackFromJson(jsonObject.getAsJsonObject("result"));
+
+			return new AlchemyRecipe(id, ingredients, soups, result);
 		}
 
-		public Builder addSolution(MobEffect effect) {
-			this.solution = this.solution.and(solution -> solution.stream()
-					.anyMatch(effectInstance -> effectInstance.getEffect() == effect)
-			);
+		@Nullable
+		@Override
+		public AlchemyRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+			List<Ingredient> ingredients = RecipeUtils.ingredientsFromBuffer(buffer.readVarInt(), buffer);
+			List<Soup> soups = RecipeUtils.soupsFromBuffer(buffer.readVarInt(), buffer);
+			ItemStack result = buffer.readItem();
 
-			return this;
+			return new AlchemyRecipe(id, ingredients, soups, result);
 		}
 
-		@SuppressWarnings("unused")
-		public Builder addSolution(MobEffect effect, int minAmplifier) {
-			this.solution = this.solution.and(solution -> solution.stream()
-					.anyMatch(effectInstance -> effectInstance.getEffect() == effect && effectInstance.getAmplifier() >= minAmplifier)
-			);
-
-			return this;
-		}
-
-		public Builder addIngredient(ItemStack itemStack) {
-			this.ingredients.add(StrictlyIngredient.of(itemStack));
-
-			return this;
-		}
-
-		public AlchemyRecipe build(ItemStack result) {
-			return new AlchemyRecipe(this.root, this.solution, this.ingredients, result);
+		@Override
+		public void toNetwork(FriendlyByteBuf buffer, AlchemyRecipe recipe) {
+			buffer.writeVarInt(recipe.getIngredients().size());
+			RecipeUtils.ingredientsToBuffer(buffer, recipe.getIngredients());
+			buffer.writeVarInt(recipe.getSoups().size());
+			RecipeUtils.soupsToBuffer(buffer, recipe.getSoups());
+			buffer.writeItem(recipe.getResultItem());
 		}
 	}
 }
