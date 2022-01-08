@@ -25,6 +25,8 @@ public class ModRecipeProvider extends RecipeProvider {
 				.soup(MobEffects.REGENERATION)
 				.save(saver, UMUArcanum.resource("alchemy_golden_apple"));
 		SpecialRecipeBuilder.special((SimpleRecipeSerializer<?>) ModRecipeSerializers.TIPPED_ALLOW.get())
-				.save(saver, UMUArcanum.resource("tipped_arrow").toString());
+				.save(saver, UMUArcanum.resource("alchemy_tipped_arrow").toString());
+		SpecialRecipeBuilder.special((SimpleRecipeSerializer<?>) ModRecipeSerializers.TOTEM_OF_UNDYING.get())
+				.save(saver, UMUArcanum.resource("alchemy_totem_of_undying").toString());
 	}
 }
