@@ -6,13 +6,16 @@ import io.github.zemelua.umu_arcanum.client.ClientHandler;
 import io.github.zemelua.umu_arcanum.datagen.ModBlockModelProvider;
 import io.github.zemelua.umu_arcanum.datagen.ModBlockStateProvider;
 import io.github.zemelua.umu_arcanum.datagen.ModItemModelProvider;
-import io.github.zemelua.umu_arcanum.datagen.ModLanguageProvider;
+import io.github.zemelua.umu_arcanum.datagen.language.ModEnglishLanguageProvider;
+import io.github.zemelua.umu_arcanum.datagen.language.ModJapaneseLanguageProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifierProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifiers;
 import io.github.zemelua.umu_arcanum.datagen.recipe.ModRecipeProvider;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;
 import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
+import io.github.zemelua.umu_arcanum.replace.ReplaceEnglishLanguageProvider;
+import io.github.zemelua.umu_arcanum.replace.ReplaceJapaneseLanguageProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -66,8 +69,12 @@ public class UMUArcanum {
 		generator.addProvider(new ModBlockModelProvider(generator, files));
 		generator.addProvider(new ModBlockStateProvider(generator, files));
 		generator.addProvider(new ModItemModelProvider(generator, files));
+		generator.addProvider(new ModEnglishLanguageProvider(generator));
+		generator.addProvider(new ModJapaneseLanguageProvider(generator));
+		generator.addProvider(new ReplaceEnglishLanguageProvider(generator));
+		generator.addProvider(new ReplaceJapaneseLanguageProvider(generator));
 		generator.addProvider(new ModLootModifierProvider(generator));
-		generator.addProvider(new ModLanguageProvider(generator));
+		// generator.addProvider(new ModLanguageProvider(generator));
 		generator.addProvider(new ModRecipeProvider(generator));
 	}
 }

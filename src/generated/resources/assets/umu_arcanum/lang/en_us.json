@@ -1,4 +1,8 @@
 {
+  "block.umu_arcanum.mana": "Mana",
+  "block.umu_arcanum.mana_cauldron": "Mana Cauldron",
+  "block.umu_arcanum.potion_cauldron": "Potion Cauldron",
+  "item.umu_arcanum.arcane_gold_ingot": "Arcane Gold Ingot",
   "item.umu_arcanum.mana_bottle": "Mana Bottle",
   "item.umu_arcanum.mana_bucket": "Mana Bucket",
   "item.umu_arcanum.witch_hat": "Witch Hat"

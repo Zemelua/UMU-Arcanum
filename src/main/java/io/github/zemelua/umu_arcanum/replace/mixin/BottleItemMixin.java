@@ -1,4 +1,4 @@
-package io.github.zemelua.umu_arcanum.mixin;
+package io.github.zemelua.umu_arcanum.replace.mixin;
 
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;

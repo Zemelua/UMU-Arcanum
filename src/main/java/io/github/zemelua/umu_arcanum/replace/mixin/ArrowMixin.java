@@ -1,4 +1,4 @@
-package io.github.zemelua.umu_arcanum.mixin;
+package io.github.zemelua.umu_arcanum.replace.mixin;
 
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
