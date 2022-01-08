@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 public class PotionCauldronBlockEntity extends BlockEntity implements Clearable {
@@ -63,10 +62,6 @@ public class PotionCauldronBlockEntity extends BlockEntity implements Clearable 
 
 	public int getColor() {
 		return PotionUtils.getColor(this.container.getEffectInstances());
-	}
-
-	public List<MobEffectInstance> in() {
-		return this.container.getEffectInstances();
 	}
 
 	@Override
