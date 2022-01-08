@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_arcanum.util;
 
 import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,9 +17,11 @@ import java.util.Collections;
 import java.util.function.Predicate;
 
 public class Soup implements Predicate<MobEffectInstance> {
+	private final Soup.Value[] values;
 	private final MobEffectInstance[] effectInstances;
 
-	private Soup(Soup.Value... values) {
+	public Soup(Soup.Value... values) {
+		this.values = values;
 		this.effectInstances = Arrays.stream(values)
 				.flatMap(value -> value.getEffects().stream())
 				.toArray(MobEffectInstance[]::new);
@@ -35,6 +38,20 @@ public class Soup implements Predicate<MobEffectInstance> {
 		return false;
 	}
 
+	public JsonElement toJson() {
+		if (this.values.length == 1) {
+			return this.values[0].serialize();
+		} else {
+			JsonArray jsonArray = new JsonArray();
+
+			for (Soup.Value value : this.values) {
+				jsonArray.add(value.serialize());
+			}
+
+			return jsonArray;
+		}
+	}
+
 	public void toBuffer(FriendlyByteBuf buffer) {
 		buffer.writeCollection(Arrays.asList(this.effectInstances), (bufferArg, effectInstance) -> {
 			ResourceLocation key = ForgeRegistries.MOB_EFFECTS.getKey(effectInstance.getEffect());
@@ -43,6 +60,13 @@ public class Soup implements Predicate<MobEffectInstance> {
 				bufferArg.writeResourceLocation(key);
 			}
 		});
+	}
+
+	public static Soup of(MobEffect... effect) {
+		return new Soup(Arrays.stream(effect)
+				.map(arg -> new Soup.EffectValue(new MobEffectInstance(arg)))
+				.toArray(Soup.Value[]::new)
+		);
 	}
 
 	private static interface Value {

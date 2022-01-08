@@ -3,14 +3,15 @@ package io.github.zemelua.umu_arcanum.recipe.alchemy;
 import com.google.gson.JsonObject;
 import io.github.zemelua.umu_arcanum.inventory.AlchemyContainer;
 import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
-import io.github.zemelua.umu_arcanum.recipe.ModRecipeTypes;
 import io.github.zemelua.umu_arcanum.util.RecipeUtils;
 import io.github.zemelua.umu_arcanum.util.Soup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -19,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.List;
 
-public class AlchemyRecipe implements Recipe<AlchemyContainer> {
+public class AlchemyRecipe implements IAlchemyRecipe {
 	private final ResourceLocation id;
 	private final List<Ingredient> ingredients;
 	private final List<Soup> soups;
@@ -76,11 +77,6 @@ public class AlchemyRecipe implements Recipe<AlchemyContainer> {
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return ModRecipeSerializers.ALCHEMY.get();
-	}
-
-	@Override
-	public RecipeType<?> getType() {
-		return ModRecipeTypes.ALCHEMY;
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlchemyRecipe> {

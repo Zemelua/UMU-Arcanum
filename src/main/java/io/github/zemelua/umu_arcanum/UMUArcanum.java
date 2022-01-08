@@ -8,6 +8,7 @@ import io.github.zemelua.umu_arcanum.datagen.ModBlockStateProvider;
 import io.github.zemelua.umu_arcanum.datagen.ModLanguageProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifierProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifiers;
+import io.github.zemelua.umu_arcanum.datagen.recipe.ModRecipeProvider;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;
 import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
@@ -65,5 +66,6 @@ public class UMUArcanum {
 		generator.addProvider(new ModBlockStateProvider(generator, files));
 		generator.addProvider(new ModLootModifierProvider(generator));
 		generator.addProvider(new ModLanguageProvider(generator));
+		generator.addProvider(new ModRecipeProvider(generator));
 	}
 }

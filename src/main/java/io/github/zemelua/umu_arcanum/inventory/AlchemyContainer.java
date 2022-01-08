@@ -37,27 +37,34 @@ public class AlchemyContainer implements Container, INBTSerializable<CompoundTag
 		this.itemStacks.add(itemStack);
 	}
 
+	@SuppressWarnings("ForLoopReplaceableByForEach")
 	public void addEffectInstance(MobEffectInstance effectInstance) {
 		List<MobEffectInstance> existing = this.effectInstances.stream()
 				.filter(arg -> arg.getEffect() == effectInstance.getEffect())
 				.toList();
 
 		if (existing.size() > 0) {
-			existing.forEach(arg -> {
-				this.effectInstances.remove(arg);
-				this.effectInstances.add(new MobEffectInstance(arg.getEffect(), arg.getDuration() + effectInstance.getDuration()));
-			});
+			for (int i = 0; i < existing.size(); i++) {
+				MobEffectInstance existingInstance = existing.get(i);
+
+				this.effectInstances.remove(existingInstance);
+				this.effectInstances.add(new MobEffectInstance(existingInstance.getEffect(),
+						existingInstance.getDuration() + effectInstance.getDuration()));
+			}
 		} else {
 			this.effectInstances.add(effectInstance);
 		}
 	}
 
+	@SuppressWarnings("ForLoopReplaceableByForEach")
 	public void duplicateEffectInstances() {
-		this.effectInstances.forEach(arg -> {
+		for (int i = 0; i < this.effectInstances.size(); i++) {
+			MobEffectInstance effectInstance = this.effectInstances.get(i);
+
 			if (this.volume > 0) {
-				this.addEffectInstance(new MobEffectInstance(arg.getEffect(), arg.getDuration() / this.volume));
+				this.addEffectInstance(new MobEffectInstance(effectInstance.getEffect(), effectInstance.getDuration() / this.volume));
 			}
-		});
+		}
 	}
 
 	public List<MobEffectInstance> separateEffectInstances() {
@@ -65,10 +72,13 @@ public class AlchemyContainer implements Container, INBTSerializable<CompoundTag
 				.map(arg -> new MobEffectInstance(arg.getEffect(), arg.getDuration() / this.volume))
 				.toList();
 
-		this.effectInstances.forEach(arg -> {
-			this.effectInstances.remove(arg);
-			this.effectInstances.add(new MobEffectInstance(arg.getEffect(), arg.getDuration() - arg.getDuration() / this.volume));
-		});
+		for (int i = 0; i < this.effectInstances.size(); i++) {
+			MobEffectInstance effectInstance = this.effectInstances.get(i);
+
+			this.effectInstances.remove(effectInstance);
+			this.effectInstances.add(new MobEffectInstance(effectInstance.getEffect(),
+					effectInstance.getDuration() - effectInstance.getDuration() / this.volume));
+		}
 
 		return separating;
 	}
