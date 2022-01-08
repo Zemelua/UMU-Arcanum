@@ -5,6 +5,7 @@ import io.github.zemelua.umu_arcanum.block.entity.ModBlockEntities;
 import io.github.zemelua.umu_arcanum.client.ClientHandler;
 import io.github.zemelua.umu_arcanum.datagen.ModBlockModelProvider;
 import io.github.zemelua.umu_arcanum.datagen.ModBlockStateProvider;
+import io.github.zemelua.umu_arcanum.datagen.ModItemModelProvider;
 import io.github.zemelua.umu_arcanum.datagen.ModLanguageProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifierProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifiers;
@@ -64,6 +65,7 @@ public class UMUArcanum {
 
 		generator.addProvider(new ModBlockModelProvider(generator, files));
 		generator.addProvider(new ModBlockStateProvider(generator, files));
+		generator.addProvider(new ModItemModelProvider(generator, files));
 		generator.addProvider(new ModLootModifierProvider(generator));
 		generator.addProvider(new ModLanguageProvider(generator));
 		generator.addProvider(new ModRecipeProvider(generator));
