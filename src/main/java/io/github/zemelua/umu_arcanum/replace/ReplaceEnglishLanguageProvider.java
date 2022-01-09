@@ -1,6 +1,10 @@
 package io.github.zemelua.umu_arcanum.replace;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class ReplaceEnglishLanguageProvider extends LanguageProvider {
@@ -10,7 +14,7 @@ public class ReplaceEnglishLanguageProvider extends LanguageProvider {
 
 	@Override
 	protected void addTranslations() {
-		this.add("item.minecraft.potion.effect.empty", "Unknown Potion");
-		this.add("item.minecraft.tipped_arrow.effect.empty", "Arrow of Unknown");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.EMPTY), "Unknown Potion");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), Potions.EMPTY), "Arrow of Unknown");
 	}
 }

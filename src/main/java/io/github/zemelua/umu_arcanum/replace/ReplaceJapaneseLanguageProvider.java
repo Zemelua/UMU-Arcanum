@@ -1,6 +1,10 @@
 package io.github.zemelua.umu_arcanum.replace;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class ReplaceJapaneseLanguageProvider extends LanguageProvider {
@@ -10,7 +14,7 @@ public class ReplaceJapaneseLanguageProvider extends LanguageProvider {
 
 	@Override
 	protected void addTranslations() {
-		this.add("item.minecraft.potion.effect.empty", "未知のポーション");
-		this.add("item.minecraft.tipped_arrow.effect.empty", "未知の矢");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.EMPTY), "未知のポーション");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), Potions.EMPTY), "未知の矢");
 	}
 }
