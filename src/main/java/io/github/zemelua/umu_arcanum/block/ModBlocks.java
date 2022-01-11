@@ -15,6 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 public final class ModBlocks {
 	private static final DeferredRegister<Block> REGISTRY = UMUArcanum.registry(ForgeRegistries.BLOCKS);
 
+	public static final RegistryObject<Block> MANDRAKE;
 	public static final RegistryObject<Block> MANA;
 	public static final RegistryObject<Block> POTION_CAULDRON;
 	public static final RegistryObject<Block> MANA_CAULDRON;
@@ -26,6 +27,9 @@ public final class ModBlocks {
 	}
 
 	static {
+		MANDRAKE = ModBlocks.REGISTRY.register("mandrake", ()
+				-> new MandrakeBlock(BlockBehaviour.Properties.copy(Blocks.CARROTS))
+		);
 		MANA = ModBlocks.REGISTRY.register("mana", ()
 				-> new LiquidBlock(ModFluids.MANA, BlockBehaviour.Properties.of(Material.WATER)
 				.noCollission()

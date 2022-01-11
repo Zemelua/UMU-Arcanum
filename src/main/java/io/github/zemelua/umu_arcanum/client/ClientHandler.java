@@ -39,6 +39,7 @@ public class ClientHandler {
 	}
 
 	private static void onFMLClientSetup(final FMLClientSetupEvent event) {
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.MANDRAKE.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.MANA_CAULDRON.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(ModFluids.MANA.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_MANA.get(), RenderType.translucent());

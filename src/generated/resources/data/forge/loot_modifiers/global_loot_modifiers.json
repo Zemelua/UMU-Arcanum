@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
+    "umu_arcanum:carrots_replace",
     "umu_arcanum:witch_replace"
   ]
 }

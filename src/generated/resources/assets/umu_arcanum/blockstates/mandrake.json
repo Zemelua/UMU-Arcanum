@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "umu_arcanum:block/mandrake_stage1"
+    },
+    "age=1": {
+      "model": "umu_arcanum:block/mandrake_stage1"
+    },
+    "age=2": {
+      "model": "umu_arcanum:block/mandrake_stage2"
+    },
+    "age=3": {
+      "model": "umu_arcanum:block/mandrake_stage2"
+    },
+    "age=4": {
+      "model": "umu_arcanum:block/mandrake_stage3"
+    },
+    "age=5": {
+      "model": "umu_arcanum:block/mandrake_stage3"
+    },
+    "age=6": {
+      "model": "umu_arcanum:block/mandrake_stage3"
+    },
+    "age=7": {
+      "model": "umu_arcanum:block/mandrake_stage4"
+    }
+  }
+}

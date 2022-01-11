@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 public final class ModLootModifiers {
 	private static final DeferredRegister<GlobalLootModifierSerializer<?>> REGISTRY = UMUArcanum.registry(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS);
 
+	public static final RegistryObject<GlobalLootModifierSerializer<CarrotsLootModifier>> CARROTS;
 	public static final RegistryObject<GlobalLootModifierSerializer<WitchLootModifier>> WITCH;
 
 
@@ -18,6 +19,7 @@ public final class ModLootModifiers {
 	}
 
 	static {
+		CARROTS = ModLootModifiers.REGISTRY.register("carrots_replace", CarrotsLootModifier.Serializer::new);
 		WITCH = ModLootModifiers.REGISTRY.register("witch_replace", WitchLootModifier.Serializer::new);
 	}
 }

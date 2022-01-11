@@ -10,12 +10,14 @@ import io.github.zemelua.umu_arcanum.datagen.language.ModEnglishLanguageProvider
 import io.github.zemelua.umu_arcanum.datagen.language.ModJapaneseLanguageProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifierProvider;
 import io.github.zemelua.umu_arcanum.datagen.lootmodifier.ModLootModifiers;
+import io.github.zemelua.umu_arcanum.datagen.loottable.ModLootTableProvider;
 import io.github.zemelua.umu_arcanum.datagen.recipe.ModRecipeProvider;
 import io.github.zemelua.umu_arcanum.effect.ModEffects;
 import io.github.zemelua.umu_arcanum.effect.ModPotions;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;
 import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
+import io.github.zemelua.umu_arcanum.replace.ReplaceBlockTagsProvider;
 import io.github.zemelua.umu_arcanum.replace.ReplaceEnglishLanguageProvider;
 import io.github.zemelua.umu_arcanum.replace.ReplaceJapaneseLanguageProvider;
 import net.minecraft.data.DataGenerator;
@@ -75,9 +77,12 @@ public class UMUArcanum {
 		generator.addProvider(new ModItemModelProvider(generator, files));
 		generator.addProvider(new ModEnglishLanguageProvider(generator));
 		generator.addProvider(new ModJapaneseLanguageProvider(generator));
-		generator.addProvider(new ReplaceEnglishLanguageProvider(generator));
-		generator.addProvider(new ReplaceJapaneseLanguageProvider(generator));
+		generator.addProvider(new ModLootTableProvider(generator));
 		generator.addProvider(new ModLootModifierProvider(generator));
 		generator.addProvider(new ModRecipeProvider(generator));
+
+		generator.addProvider(new ReplaceEnglishLanguageProvider(generator));
+		generator.addProvider(new ReplaceJapaneseLanguageProvider(generator));
+		generator.addProvider(new ReplaceBlockTagsProvider(generator, files));
 	}
 }

@@ -11,6 +11,7 @@ public class ModLootModifierProvider extends GlobalLootModifierProvider {
 
 	@Override
 	protected void start() {
+		this.add("carrots_replace", ModLootModifiers.CARROTS.get(), new CarrotsLootModifier());
 		this.add("witch_replace", ModLootModifiers.WITCH.get(), new WitchLootModifier());
 	}
 }

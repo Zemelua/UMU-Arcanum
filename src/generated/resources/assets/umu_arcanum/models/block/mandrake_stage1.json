@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "umu_arcanum:block/mandrake_stage1"
+  }
+}

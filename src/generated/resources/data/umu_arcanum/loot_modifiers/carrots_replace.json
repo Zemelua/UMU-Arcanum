@@ -1,0 +1,26 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:block_state_property",
+      "block": "minecraft:carrots",
+      "properties": {
+        "age": "7"
+      }
+    },
+    {
+      "condition": "minecraft:random_chance_with_looting",
+      "chance": 0.1,
+      "looting_multiplier": 0.02
+    },
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "fluid": {
+          "fluid": "umu_arcanum:mana"
+        }
+      },
+      "offsetY": -2
+    }
+  ],
+  "type": "umu_arcanum:carrots_replace"
+}
