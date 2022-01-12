@@ -1,0 +1,31 @@
+{
+  "type": "umu_arcanum:alchemy",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:blackstone"
+    },
+    {
+      "item": "minecraft:calcite"
+    },
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "soups": [
+    {
+      "effect": "minecraft:strength"
+    },
+    {
+      "effect": "minecraft:weakness"
+    },
+    {
+      "effect": "minecraft:instant_health"
+    }
+  ],
+  "result": {
+    "item": "minecraft:netherite_ingot"
+  }
+}

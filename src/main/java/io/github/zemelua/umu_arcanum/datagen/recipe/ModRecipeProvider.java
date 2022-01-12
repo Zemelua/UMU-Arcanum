@@ -19,6 +19,32 @@ public class ModRecipeProvider extends RecipeProvider {
 
 	@Override
 	protected void buildCraftingRecipes(Consumer<FinishedRecipe> saver) {
+		new AlchemyRecipeBuilder(Items.GOLD_INGOT)
+				.ingredient(Items.IRON_INGOT)
+				.ingredient(Items.BLAZE_POWDER)
+				.ingredient(Items.GLOWSTONE_DUST)
+				.soup(MobEffects.DAMAGE_BOOST)
+				.soup(MobEffects.WEAKNESS)
+				.soup(MobEffects.HEAL)
+				.save(saver, UMUArcanum.resource("alchemy_gold_ingot"));
+		new AlchemyRecipeBuilder(Items.DIAMOND)
+				.ingredient(Items.CLAY_BALL)
+				.ingredient(Items.BLAZE_POWDER)
+				.ingredient(Items.GOLD_INGOT)
+				.ingredient(Items.AMETHYST_SHARD)
+				.soup(MobEffects.DAMAGE_BOOST)
+				.soup(MobEffects.WEAKNESS)
+				.soup(MobEffects.HEAL)
+				.save(saver, UMUArcanum.resource("alchemy_diamond"));
+		new AlchemyRecipeBuilder(Items.NETHERITE_INGOT)
+				.ingredient(Items.GOLD_INGOT)
+				.ingredient(Items.BLACKSTONE)
+				.ingredient(Items.CALCITE)
+				.ingredient(Items.OBSIDIAN)
+				.soup(MobEffects.DAMAGE_BOOST)
+				.soup(MobEffects.WEAKNESS)
+				.soup(MobEffects.HEAL)
+				.save(saver, UMUArcanum.resource("alchemy_netherite_ingot"));
 		new AlchemyRecipeBuilder(Items.GOLDEN_APPLE)
 				.ingredient(Items.APPLE)
 				.ingredient(Items.GOLD_INGOT)

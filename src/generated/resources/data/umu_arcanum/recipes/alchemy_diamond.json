@@ -1,0 +1,31 @@
+{
+  "type": "umu_arcanum:alchemy",
+  "ingredients": [
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "soups": [
+    {
+      "effect": "minecraft:strength"
+    },
+    {
+      "effect": "minecraft:weakness"
+    },
+    {
+      "effect": "minecraft:instant_health"
+    }
+  ],
+  "result": {
+    "item": "minecraft:diamond"
+  }
+}

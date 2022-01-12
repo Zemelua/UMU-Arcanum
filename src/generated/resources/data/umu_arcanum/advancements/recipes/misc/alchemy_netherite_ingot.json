@@ -1,0 +1,21 @@
+{
+  "parent": "umu_arcanum:recipes/root",
+  "rewards": {
+    "recipes": [
+      "umu_arcanum:alchemy_netherite_ingot"
+    ]
+  },
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "umu_arcanum:alchemy_netherite_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe"
+    ]
+  ]
+}

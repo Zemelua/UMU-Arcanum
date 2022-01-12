@@ -19,11 +19,13 @@ public final class ModItems {
 	public static final RegistryObject<Item> MANA_BOTTLE;
 	public static final RegistryObject<Item> MANA_BUCKET;
 	public static final RegistryObject<Item> WITCH_HAT;
+	public static final RegistryObject<Item> EVOKER_CLOAK;
 
 	public static void initialize(IEventBus forgeEvents, IEventBus modEvents) {
 		ModItems.REGISTRY.register(modEvents);
-		forgeEvents.addListener(WitchHatItem::onLivingHurt);
 		forgeEvents.addListener(ManaBucketItem::onPotionAdded);
+		forgeEvents.addListener(WitchHatItem::onLivingHurt);
+		forgeEvents.addListener(EvokerCloakItem::onLivingHurt);
 	}
 
 	static {
@@ -50,6 +52,10 @@ public final class ModItems {
 		);
 		WITCH_HAT = ModItems.REGISTRY.register("witch_hat", ()
 				-> new WitchHatItem(new Item.Properties()
+				.tab(ModTabs.UMU_ARCANUM))
+		);
+		EVOKER_CLOAK = ModItems.REGISTRY.register("evoker_cloak", ()
+				-> new EvokerCloakItem(new Item.Properties()
 				.tab(ModTabs.UMU_ARCANUM))
 		);
 	}

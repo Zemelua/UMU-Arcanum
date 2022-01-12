@@ -1,0 +1,21 @@
+{
+  "parent": "umu_arcanum:recipes/root",
+  "rewards": {
+    "recipes": [
+      "umu_arcanum:alchemy_diamond"
+    ]
+  },
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "umu_arcanum:alchemy_diamond"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe"
+    ]
+  ]
+}
