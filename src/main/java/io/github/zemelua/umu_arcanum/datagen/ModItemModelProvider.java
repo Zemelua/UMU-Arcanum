@@ -22,5 +22,7 @@ public class ModItemModelProvider extends BetterItemModelProvider {
 				.texture("layer0", "item/mana_bucket");
 		this.generated("witch_hat")
 				.texture("layer0", "item/witch_hat");
+		this.generated("evoker_cloak")
+				.texture("layer0", "item/evoker_cloak");
 	}
 }
