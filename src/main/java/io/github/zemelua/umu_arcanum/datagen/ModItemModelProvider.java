@@ -16,6 +16,8 @@ public class ModItemModelProvider extends BetterItemModelProvider {
 				.texture("layer0", "item/arcane_gold_ingot");
 		this.generated("mandrake")
 				.texture("layer0", "item/mandrake");
+		this.generated("bat_wing")
+				.texture("layer0", "item/bat_wing");
 		this.generated("mana_bottle")
 				.texture("layer0", "item/mana_bottle");
 		this.generated("mana_bucket")

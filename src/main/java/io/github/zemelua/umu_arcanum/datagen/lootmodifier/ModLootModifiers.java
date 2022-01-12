@@ -12,6 +12,7 @@ public final class ModLootModifiers {
 
 	public static final RegistryObject<GlobalLootModifierSerializer<CarrotsLootModifier>> CARROTS;
 	public static final RegistryObject<GlobalLootModifierSerializer<WitchLootModifier>> WITCH;
+	public static final RegistryObject<GlobalLootModifierSerializer<EvokerLootModifier>> EVOKER;
 
 
 	public static void initialize(@SuppressWarnings("unused") IEventBus forgeEvents, IEventBus modEvents) {
@@ -21,5 +22,6 @@ public final class ModLootModifiers {
 	static {
 		CARROTS = ModLootModifiers.REGISTRY.register("carrots_replace", CarrotsLootModifier.Serializer::new);
 		WITCH = ModLootModifiers.REGISTRY.register("witch_replace", WitchLootModifier.Serializer::new);
+		EVOKER = ModLootModifiers.REGISTRY.register("evoker_replace", EvokerLootModifier.Serializer::new);
 	}
 }

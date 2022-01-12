@@ -16,6 +16,7 @@ public final class ModItems {
 
 	public static final RegistryObject<Item> ARCANE_GOLD_INGOT;
 	public static final RegistryObject<Item> MANDRAKE;
+	public static final RegistryObject<Item> BAT_WING;
 	public static final RegistryObject<Item> MANA_BOTTLE;
 	public static final RegistryObject<Item> MANA_BUCKET;
 	public static final RegistryObject<Item> WITCH_HAT;
@@ -30,6 +31,10 @@ public final class ModItems {
 
 	static {
 		ARCANE_GOLD_INGOT = ModItems.REGISTRY.register("arcane_gold_ingot", ()
+				-> new Item(new Item.Properties()
+				.tab(ModTabs.UMU_ARCANUM))
+		);
+		BAT_WING = ModItems.REGISTRY.register("bat_wing", ()
 				-> new Item(new Item.Properties()
 				.tab(ModTabs.UMU_ARCANUM))
 		);

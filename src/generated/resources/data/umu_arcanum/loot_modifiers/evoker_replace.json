@@ -1,0 +1,20 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "predicate": {
+        "type": "minecraft:evoker"
+      },
+      "entity": "this"
+    },
+    {
+      "condition": "minecraft:killed_by_player"
+    },
+    {
+      "condition": "minecraft:random_chance_with_looting",
+      "chance": 0.11,
+      "looting_multiplier": 0.02
+    }
+  ],
+  "type": "umu_arcanum:evoker_replace"
+}

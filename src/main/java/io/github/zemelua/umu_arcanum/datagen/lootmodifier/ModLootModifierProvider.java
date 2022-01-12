@@ -13,5 +13,6 @@ public class ModLootModifierProvider extends GlobalLootModifierProvider {
 	protected void start() {
 		this.add("carrots_replace", ModLootModifiers.CARROTS.get(), new CarrotsLootModifier());
 		this.add("witch_replace", ModLootModifiers.WITCH.get(), new WitchLootModifier());
+		this.add("evoker_replace", ModLootModifiers.EVOKER.get(), new EvokerLootModifier());
 	}
 }
