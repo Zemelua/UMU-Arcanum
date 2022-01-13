@@ -16,6 +16,7 @@ import io.github.zemelua.umu_arcanum.effect.ModEffects;
 import io.github.zemelua.umu_arcanum.effect.ModPotions;
 import io.github.zemelua.umu_arcanum.fluid.ModFluids;
 import io.github.zemelua.umu_arcanum.item.ModItems;
+import io.github.zemelua.umu_arcanum.network.NetworkHandler;
 import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
 import io.github.zemelua.umu_arcanum.replace.ReplaceBlockTagsProvider;
 import io.github.zemelua.umu_arcanum.replace.ReplaceEnglishLanguageProvider;
@@ -56,6 +57,8 @@ public class UMUArcanum {
 		ModLootModifiers.initialize(forgeEvents, modEvents);
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> new ClientHandler(forgeEvents, modEvents)::initialize);
+
+		NetworkHandler.initialize();
 
 		modEvents.addListener(UMUArcanum::onGatherData);
 	}
