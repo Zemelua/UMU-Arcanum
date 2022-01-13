@@ -61,7 +61,11 @@ public class PotionCauldronBlockEntity extends BlockEntity implements Clearable 
 	}
 
 	public int getColor() {
-		return PotionUtils.getColor(this.container.getEffectInstances());
+		return PotionUtils.getColor(this.getEffectInstances());
+	}
+
+	public Collection<MobEffectInstance> getEffectInstances() {
+		return this.container.getEffectInstances();
 	}
 
 	@Override

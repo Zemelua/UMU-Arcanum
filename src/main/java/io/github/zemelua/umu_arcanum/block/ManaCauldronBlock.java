@@ -1,20 +1,30 @@
 package io.github.zemelua.umu_arcanum.block;
 
+import io.github.zemelua.umu_arcanum.effect.ModEffects;
 import io.github.zemelua.umu_arcanum.item.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
+import java.util.List;
 import java.util.Map;
 
 public class ManaCauldronBlock extends LayeredCauldronBlock {
@@ -27,6 +37,28 @@ public class ManaCauldronBlock extends LayeredCauldronBlock {
 
 	public ManaCauldronBlock(Properties properties) {
 		super(properties, precipitation -> precipitation == Biome.Precipitation.NONE, ManaCauldronBlock.INTERACTIONS);
+	}
+
+	@Override
+	@SuppressWarnings("ForLoopReplaceableByForEach")
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		if (entity.isOnFire()) {
+			entity.clearFire();
+		}
+
+		if (!world.isClientSide() && this.isEntityInsideContent(state, pos, entity)) {
+			if (entity instanceof LivingEntity entityLiving) {
+				List<MobEffect> effects = entityLiving.getActiveEffectsMap().keySet().stream().toList();
+
+				for (int i = 0; i < effects.size(); i++) {
+					if (effects.get(i).getCategory() == MobEffectCategory.HARMFUL) {
+						entityLiving.removeEffect(effects.get(i));
+					}
+				}
+
+				entityLiving.addEffect(new MobEffectInstance(ModEffects.BLESSING.get(), 200));
+			}
+		}
 	}
 
 	protected static void onFMLCommonSetup(final FMLCommonSetupEvent event) {

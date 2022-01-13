@@ -11,7 +11,10 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -97,6 +100,36 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 		return RenderShape.MODEL;
 	}
 
+	@Override
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		if (entity.isOnFire()) {
+			entity.clearFire();
+		}
+
+		if (!world.isClientSide() && this.isEntityInsideContent(state, pos, entity)) {
+			if (entity instanceof LivingEntity entityLiving) {
+				@Nullable PotionCauldronBlockEntity blockEntity = (PotionCauldronBlockEntity) world.getBlockEntity(pos);
+
+				if (blockEntity != null) {
+					blockEntity.getEffectInstances().stream()
+							.map(effectInstance -> new MobEffectInstance(effectInstance.getEffect(), 200, effectInstance.getAmplifier()))
+							.forEach(entityLiving::addEffect);
+				}
+			}
+		}
+	}
+
+	protected static void onFMLCommonSetup(final FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> {
+			CauldronInteraction.addDefaultInteractions(PotionCauldronBlock.INTERACTIONS);
+			PotionCauldronBlock.INTERACTIONS.put(Items.POTION, PotionCauldronBlock.POUR_POTION);
+			PotionCauldronBlock.INTERACTIONS.put(ModItems.MANA_BOTTLE.get(), PotionCauldronBlock.POUR_MANA);
+			PotionCauldronBlock.INTERACTIONS.put(Items.GLASS_BOTTLE, PotionCauldronBlock.SCOOP_POTION);
+
+			CauldronInteraction.EMPTY.put(Items.POTION, PotionCauldronBlock.POUR_POTION_EMPTY);
+		});
+	}
+
 	static {
 		POUR_POTION = (state, level, pos, player, hand, itemStack) -> {
 			if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
@@ -170,17 +203,6 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 			}
 
 			return InteractionResult.sidedSuccess(level.isClientSide());
-		});
-	}
-
-	protected static void onFMLCommonSetup(final FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			CauldronInteraction.addDefaultInteractions(PotionCauldronBlock.INTERACTIONS);
-			PotionCauldronBlock.INTERACTIONS.put(Items.POTION, PotionCauldronBlock.POUR_POTION);
-			PotionCauldronBlock.INTERACTIONS.put(ModItems.MANA_BOTTLE.get(), PotionCauldronBlock.POUR_MANA);
-			PotionCauldronBlock.INTERACTIONS.put(Items.GLASS_BOTTLE, PotionCauldronBlock.SCOOP_POTION);
-
-			CauldronInteraction.EMPTY.put(Items.POTION, PotionCauldronBlock.POUR_POTION_EMPTY);
 		});
 	}
 }
