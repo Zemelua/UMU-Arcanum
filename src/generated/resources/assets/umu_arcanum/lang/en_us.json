@@ -1,14 +1,23 @@
 {
   "block.umu_arcanum.mana": "Mana",
   "block.umu_arcanum.mana_cauldron": "Mana Cauldron",
+  "block.umu_arcanum.mandrake": "Mandrake",
   "block.umu_arcanum.potion_cauldron": "Potion Cauldron",
   "effect.umu_arcanum.blessing": "Blessing",
+  "effect.umu_arcanum.vulnerable": "Vulnerable",
   "item.minecraft.lingering_potion.effect.blessing": "Blessing Lingering Potion",
+  "item.minecraft.lingering_potion.effect.mandrake_scream": "Mandrake Scream Lingering Potion",
   "item.minecraft.potion.effect.blessing": "Blessing Potion",
+  "item.minecraft.potion.effect.mandrake_scream": "Mandrake Scream Potion",
   "item.minecraft.splash_potion.effect.blessing": "Blessing Splash Potion",
+  "item.minecraft.splash_potion.effect.mandrake_scream": "Mandrake Scream Splash Potion",
   "item.minecraft.tipped_arrow.effect.blessing": "Blessing Arrow",
+  "item.minecraft.tipped_arrow.effect.mandrake_scream": "Mandrake Scream Arrow",
   "item.umu_arcanum.arcane_gold_ingot": "Arcane Gold Ingot",
+  "item.umu_arcanum.bat_wing": "Bat Wing",
+  "item.umu_arcanum.evoker_cloak": "Evoker cloak",
   "item.umu_arcanum.mana_bottle": "Mana Bottle",
   "item.umu_arcanum.mana_bucket": "Mana Bucket",
+  "item.umu_arcanum.mandrake": "Mandrake",
   "item.umu_arcanum.witch_hat": "Witch Hat"
 }

@@ -15,6 +15,8 @@ public class ReplaceEnglishLanguageProvider extends LanguageProvider {
 	@Override
 	protected void addTranslations() {
 		this.add(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.EMPTY), "Unknown Potion");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), Potions.EMPTY), "Unknown Splash Potion");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.LINGERING_POTION), Potions.EMPTY), "Unknown Lingering Potion");
 		this.add(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), Potions.EMPTY), "Arrow of Unknown");
 	}
 }

@@ -1,4 +1,6 @@
 {
+  "item.minecraft.lingering_potion.effect.empty": "Unknown Lingering Potion",
   "item.minecraft.potion.effect.empty": "Unknown Potion",
+  "item.minecraft.splash_potion.effect.empty": "Unknown Splash Potion",
   "item.minecraft.tipped_arrow.effect.empty": "Arrow of Unknown"
 }

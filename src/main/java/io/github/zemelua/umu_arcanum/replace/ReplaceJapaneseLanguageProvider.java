@@ -15,6 +15,8 @@ public class ReplaceJapaneseLanguageProvider extends LanguageProvider {
 	@Override
 	protected void addTranslations() {
 		this.add(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.EMPTY), "未知のポーション");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), Potions.EMPTY), "未知のスプラッシュポーション");
+		this.add(PotionUtils.setPotion(new ItemStack(Items.LINGERING_POTION), Potions.EMPTY), "未知の残留ポーション");
 		this.add(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), Potions.EMPTY), "未知の矢");
 	}
 }
