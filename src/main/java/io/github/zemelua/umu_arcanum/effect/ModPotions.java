@@ -32,8 +32,7 @@ public final class ModPotions {
 
 	private static boolean initialized = false;
 
-	private ModPotions() {
-	}
+	private ModPotions() {}
 
 	public static void initialize(@SuppressWarnings("unused") IEventBus forgeEvents, IEventBus modEvents) {
 		if (ModPotions.initialized) UMUArcanum.LOGGER.error(ModPotions.MARKER, "Already initialized!");
