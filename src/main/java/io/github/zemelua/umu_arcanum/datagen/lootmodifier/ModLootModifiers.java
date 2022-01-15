@@ -11,6 +11,7 @@ public final class ModLootModifiers {
 	private static final DeferredRegister<GlobalLootModifierSerializer<?>> REGISTRY = UMUArcanum.registry(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS);
 
 	public static final RegistryObject<GlobalLootModifierSerializer<CarrotsLootModifier>> CARROTS;
+	public static final RegistryObject<GlobalLootModifierSerializer<BatLootModifier>> BAT;
 	public static final RegistryObject<GlobalLootModifierSerializer<WitchLootModifier>> WITCH;
 	public static final RegistryObject<GlobalLootModifierSerializer<EvokerLootModifier>> EVOKER;
 
@@ -21,6 +22,7 @@ public final class ModLootModifiers {
 
 	static {
 		CARROTS = ModLootModifiers.REGISTRY.register("carrots_replace", CarrotsLootModifier.Serializer::new);
+		BAT = ModLootModifiers.REGISTRY.register("bat_replace", BatLootModifier.Serializer::new);
 		WITCH = ModLootModifiers.REGISTRY.register("witch_replace", WitchLootModifier.Serializer::new);
 		EVOKER = ModLootModifiers.REGISTRY.register("evoker_replace", EvokerLootModifier.Serializer::new);
 	}
