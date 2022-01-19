@@ -22,6 +22,7 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
 		this.addBlock(ModBlocks.MANA, "Mana");
 		this.addBlock(ModBlocks.MANA_CAULDRON, "Mana Cauldron");
 		this.addBlock(ModBlocks.POTION_CAULDRON, "Potion Cauldron");
+		this.addItem(ModItems.WAND, "Wand");
 		this.addItem(ModItems.ARCANE_GOLD_INGOT, "Arcane Gold Ingot");
 		this.addItem(ModItems.MANDRAKE, "Mandrake");
 		this.addItem(ModItems.BAT_WING, "Bat Wing");

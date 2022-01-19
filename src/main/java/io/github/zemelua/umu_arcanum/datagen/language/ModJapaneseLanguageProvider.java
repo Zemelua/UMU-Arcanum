@@ -22,6 +22,7 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
 		this.addBlock(ModBlocks.MANA, "マナ");
 		this.addBlock(ModBlocks.MANA_CAULDRON, "マナ入りの大釜");
 		this.addBlock(ModBlocks.POTION_CAULDRON, "ポーション入りの大釜");
+		this.addItem(ModItems.WAND, "杖");
 		this.addItem(ModItems.MANDRAKE, "マンドレイク");
 		this.addItem(ModItems.BAT_WING, "コウモリの翼");
 		this.addItem(ModItems.ARCANE_GOLD_INGOT, "神秘の金インゴット");

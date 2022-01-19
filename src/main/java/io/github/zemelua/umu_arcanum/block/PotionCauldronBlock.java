@@ -61,7 +61,7 @@ public class PotionCauldronBlock extends LayeredCauldronBlock implements EntityB
 			ItemStack heldStack = player.getItemInHand(hand);
 			Collection<ItemEntity> itemEntities = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos));
 
-			if (heldStack.is(Items.STICK) && !itemEntities.isEmpty()) {
+			if (heldStack.is(ModItems.WAND.get()) && !itemEntities.isEmpty()) {
 				if (!level.isClientSide()) {
 					level.playSound(player, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
 

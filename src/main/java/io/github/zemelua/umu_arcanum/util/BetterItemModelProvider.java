@@ -13,4 +13,8 @@ public abstract class BetterItemModelProvider extends ItemModelProvider {
 	protected ItemModelBuilder generated(String name) {
 		return this.withExistingParent(name, "generated");
 	}
+
+	protected ItemModelBuilder handheld(String name) {
+		return this.withExistingParent(name, "handheld");
+	}
 }

@@ -14,6 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
 public final class ModItems {
 	private static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, UMUArcanum.MOD_ID);
 
+	public static final RegistryObject<Item> WAND;
 	public static final RegistryObject<Item> ARCANE_GOLD_INGOT;
 	public static final RegistryObject<Item> MANDRAKE;
 	public static final RegistryObject<Item> BAT_WING;
@@ -30,6 +31,11 @@ public final class ModItems {
 	}
 
 	static {
+		WAND = ModItems.REGISTRY.register("wand", ()
+				-> new Item(new Item.Properties()
+				.stacksTo(1)
+				.tab(ModTabs.UMU_ARCANUM))
+		);
 		ARCANE_GOLD_INGOT = ModItems.REGISTRY.register("arcane_gold_ingot", ()
 				-> new Item(new Item.Properties()
 				.tab(ModTabs.UMU_ARCANUM))

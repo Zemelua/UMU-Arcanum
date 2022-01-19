@@ -12,6 +12,8 @@ public class ModItemModelProvider extends BetterItemModelProvider {
 
 	@Override
 	protected void registerModels() {
+		this.handheld("wand")
+				.texture("layer0", "item/wand");
 		this.generated("arcane_gold_ingot")
 				.texture("layer0", "item/arcane_gold_ingot");
 		this.generated("mandrake")

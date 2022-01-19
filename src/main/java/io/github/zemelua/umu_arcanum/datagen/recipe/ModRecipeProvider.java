@@ -1,11 +1,14 @@
 package io.github.zemelua.umu_arcanum.datagen.recipe;
 
 import io.github.zemelua.umu_arcanum.UMUArcanum;
+import io.github.zemelua.umu_arcanum.item.ModItems;
 import io.github.zemelua.umu_arcanum.recipe.ModRecipeSerializers;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
@@ -19,6 +22,15 @@ public class ModRecipeProvider extends RecipeProvider {
 
 	@Override
 	protected void buildCraftingRecipes(Consumer<FinishedRecipe> saver) {
+		ShapedRecipeBuilder.shaped(ModItems.WAND.get())
+				.pattern("#")
+				.pattern("X")
+				.pattern("Y")
+				.define('#', Items.AMETHYST_SHARD)
+				.define('X', ItemTags.LOGS)
+				.define('Y', Items.STICK)
+				.unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
+				.save(saver);
 		new AlchemyRecipeBuilder(Items.GOLD_INGOT)
 				.ingredient(Items.IRON_INGOT)
 				.ingredient(Items.BLAZE_POWDER)
