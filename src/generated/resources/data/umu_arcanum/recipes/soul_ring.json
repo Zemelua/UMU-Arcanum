@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "X X",
+    " X "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:soul_sand"
+    },
+    "X": {
+      "item": "umu_arcanum:arcane_gold_ingot"
+    }
+  },
+  "result": {
+    "item": "umu_arcanum:soul_ring"
+  }
+}

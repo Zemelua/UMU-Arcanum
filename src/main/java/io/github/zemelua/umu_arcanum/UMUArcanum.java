@@ -2,6 +2,7 @@ package io.github.zemelua.umu_arcanum;
 
 import io.github.zemelua.umu_arcanum.block.ModBlocks;
 import io.github.zemelua.umu_arcanum.block.entity.ModBlockEntities;
+import io.github.zemelua.umu_arcanum.capability.ModCapabilities;
 import io.github.zemelua.umu_arcanum.client.ClientHandler;
 import io.github.zemelua.umu_arcanum.datagen.ModBlockModelProvider;
 import io.github.zemelua.umu_arcanum.datagen.ModBlockStateProvider;
@@ -53,6 +54,7 @@ public class UMUArcanum {
 		ModFluids.initialize(forgeEvents, modEvents);
 		ModEffects.initialize(forgeEvents, modEvents);
 		ModPotions.initialize(forgeEvents, modEvents);
+		ModCapabilities.initialize(forgeEvents, modEvents);
 		ModRecipeSerializers.initialize(forgeEvents, modEvents);
 		ModLootModifiers.initialize(forgeEvents, modEvents);
 

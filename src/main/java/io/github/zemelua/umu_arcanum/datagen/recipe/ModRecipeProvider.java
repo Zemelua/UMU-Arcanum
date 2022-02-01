@@ -29,7 +29,15 @@ public class ModRecipeProvider extends RecipeProvider {
 				.define('#', Items.AMETHYST_SHARD)
 				.define('X', ItemTags.LOGS)
 				.define('Y', Items.STICK)
-				.unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
+				.unlockedBy("has_amethyst_shard", RecipeProvider.has(Items.AMETHYST_SHARD))
+				.save(saver);
+		ShapedRecipeBuilder.shaped(ModItems.SOUL_RING.get())
+				.pattern(" # ")
+				.pattern("X X")
+				.pattern(" X ")
+				.define('#', Items.SOUL_SAND)
+				.define('X', ModItems.ARCANE_GOLD_INGOT.get())
+				.unlockedBy("has_arcane_gold_ingot", RecipeProvider.has(ModItems.ARCANE_GOLD_INGOT.get()))
 				.save(saver);
 		new AlchemyRecipeBuilder(Items.GOLD_INGOT)
 				.ingredient(Items.IRON_INGOT)
